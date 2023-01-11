@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ItemService } from './item.service';
+import {  Paginate, PaginateQuery, } from 'nestjs-paginate';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 
@@ -13,8 +14,8 @@ export class ItemController {
   }
 
   @Get()
-  findAll() {
-    return this.itemService.findAll();
+  findAll(@Paginate() query: PaginateQuery) {
+    return this.itemService.findAll(query);
   }
 
   @Get(':id')

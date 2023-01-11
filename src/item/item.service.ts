@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PaginateQuery, paginate, Paginated } from 'nestjs-paginate';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { Item } from './entities/item.entity';
@@ -13,8 +14,13 @@ export class ItemService {
    return this.repository.save(this.repository.create(data)); 
  }
 
- findAll(): Promise<Item[]> {
-   return this.repository.find();
+ findAll(query: PaginateQuery): Promise<Paginated<Item>> {
+   return paginate(query, this.repository, {
+    sortableColumns: ['id', 'name'],
+    nullSort: 'last',
+    searchableColumns: ['name'],
+    defaultSortBy: [['id', 'DESC']],
+  })
  }
 
   findOne(id: string): Promise<Item> {
