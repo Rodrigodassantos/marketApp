@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn }from "typeorm";
 
 @Entity()
-export class Item extends BaseEntity{
+export class Item {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -19,4 +19,14 @@ export class Item extends BaseEntity{
 
     @Column({ name: 'type', type: 'varchar', length: 50})
     type: string;
+
+
+constructor(item?: Partial<Item>) {
+    this.id = item?.id;
+    this.updatedAt = item?.updatedAt;
+    this.name = item?.name;
+    this.description = item?.description;
+    this.quantity = item?.quantity;
+    this.type = item?.type;
+}
 }

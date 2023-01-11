@@ -9,9 +9,8 @@ import { Item } from './entities/item.entity';
 export class ItemService {
  constructor(@InjectRepository(Item) private readonly repository: Repository<Item>) { }
 
- create(createItemDto: CreateItemDto): Promise<Item> {
-   const item = this.repository.create(createItemDto);
-   return this.repository.save(item);
+ async create(data: CreateItemDto): Promise<Item> {
+   return this.repository.save(this.repository.create(data)); 
  }
 
  findAll(): Promise<Item[]> {
@@ -30,6 +29,7 @@ export class ItemService {
    if (!item) {
      throw new NotFoundException(`Item ${id} not found`);
    }
+   console.log(item)
    return this.repository.save(item);
  }
 

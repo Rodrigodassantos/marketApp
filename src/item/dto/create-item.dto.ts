@@ -15,7 +15,7 @@ export class CreateItemDto {
     @ApiProperty({ example: 5, description: 'Needed quantity' })
     @IsInt()
     @Min(0)
-    quantity: number;
+    quantity: number; 
 
     @ApiProperty({example: 'cx'})
     @IsString()
